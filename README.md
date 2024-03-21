@@ -1,4 +1,8 @@
-# Patterns
+# Description
+
+Repository written by [Jose](https://github.com/josemvcerqueira) (move package) and [Thouny](https://github.com/thounyy) (interaction scripts) as part of [WBA Sui Cohort](https://github.com/Web3-Builders-Alliance/sui-course).
+
+# Move Patterns
 
 ### Object wrapping
 
@@ -42,16 +46,20 @@ We do store the user balance and debt inside an owned object that can be held by
 
 The Sui blockchain gives Sui rebates when objects are deleted as it frees up storage slots. It is best practice to provide means for objects to be destroyed. Do keep in mind that you should ensure that the objects being deleted are empty to prevent loss of funds.
 
-## Challenge
+# PTBs
 
-Write two swap functions with the signatures below:
+Using bun.sh.
+Create your own .env.
 
-```move
-  public fun swap_sui(bank: &mut Bank, cap: &mut CapWrapper, coin_in: Coin<SUI>, ctx: &mut TxContext): Coin<SUI_DOLLAR> {
-    abort(0)
-  }
+### publish
+Publish the package on Sui testnet. It writes the created objects to .created.json. This file is then used by ./utils/getId to easily retrieve the objects created during deployment.
 
-  public fun swap_sui_dollar(bank: &mut Bank, cap: &mut CapWrapper, coin_in: Coin<SUI_DOLLAR>, ctx: &mut TxContext): Coin<SUI> {
-    abort(0)
-  }
-```
+### newAccount
+Creates and sends a new Account object to the signer address.
+
+### depositAndBorrow
+Fetch a potential Account object for the user. Create one if it doesn't exist. Deposit the split SUI and borrow the given amount of DOLLAR.
+
+### repayAndWithdraw
+You can practice by writing the reverse transaction.
+Repay the borrowed amount, then withdraw the deposited amount and finally destroy the Account object.
